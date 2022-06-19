@@ -24,7 +24,7 @@ public class GraphShow {
                 graphWeighted.addEdge(graphWeighted.nodes.get(i), graphWeighted.nodes.get(j), probabilidad, Math.random()*10);
             }
         }
-
+        //graphWeighted.DijkstraShortestPath(graphWeighted.nodes.get(0), graphWeighted.nodes.get(cantidadNodos-1));
         return graphWeighted;
     }
 
