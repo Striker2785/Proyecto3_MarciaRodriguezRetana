@@ -5,14 +5,12 @@ import java.util.*;
 public class GraphWeighted {
     public ArrayList<NodeWeighted> nodes;
     private boolean directed;
-    private double p;
     public int nNodos;
 
-    GraphWeighted(boolean directed, int n, double probabilidad) {
+    GraphWeighted(boolean directed, int n) {
         this.nNodos = n;
         this.directed = directed;
         nodes = new ArrayList<>(n);
-        this.p = probabilidad;
     }
 
     public void addNode(NodeWeighted... n) {
@@ -26,11 +24,11 @@ public class GraphWeighted {
     }
 
 
-    public void addEdge(NodeWeighted source, NodeWeighted destination, double weight) {
+    public void addEdge(NodeWeighted source, NodeWeighted destination, double probabilidad, double weight) {
         // Since we're using a Set, it will only add the nodes
         // if they don't already exist in our graph
 
-        if(Math.random()<this.p){
+        if(Math.random()<probabilidad){
             addNode(source);
             addNode(destination);
 
