@@ -3,12 +3,16 @@ package com.example.proyecto3;
 import java.util.*;
 
 public class GraphWeighted {
-    private Set<NodeWeighted> nodes;
+    public ArrayList<NodeWeighted> nodes;
     private boolean directed;
+    private double p;
+    public int nNodos;
 
-    GraphWeighted(boolean directed) {
+    GraphWeighted(boolean directed, int n, double probabilidad) {
+        this.nNodos = n;
         this.directed = directed;
-        nodes = new HashSet<>();
+        nodes = new ArrayList<>(n);
+        this.p = probabilidad;
     }
 
     public void addNode(NodeWeighted... n) {
@@ -17,18 +21,28 @@ public class GraphWeighted {
         nodes.addAll(Arrays.asList(n));
     }
 
+    public NodeWeighted obtenerNodo(int id){
+        return nodes.get(id);
+    }
+
+
     public void addEdge(NodeWeighted source, NodeWeighted destination, double weight) {
         // Since we're using a Set, it will only add the nodes
         // if they don't already exist in our graph
-        nodes.add(source);
-        nodes.add(destination);
 
-        // We're using addEdgeHelper to make sure we don't have duplicate edges
-        addEdgeHelper(source, destination, weight);
+        if(Math.random()<this.p){
+            addNode(source);
+            addNode(destination);
 
-        if (!directed && source != destination) {
-            addEdgeHelper(destination, source, weight);
+            // We're using addEdgeHelper to make sure we don't have duplicate edges
+            addEdgeHelper(source, destination, weight);
+
+            if (!directed && source != destination) {
+                addEdgeHelper(destination, source, weight);
+            }
         }
+
+
     }
 
     private void addEdgeHelper(NodeWeighted a, NodeWeighted b, double weight) {
@@ -187,5 +201,6 @@ public class GraphWeighted {
         }
         return closestReachableNode;
     }
+
 }
 
