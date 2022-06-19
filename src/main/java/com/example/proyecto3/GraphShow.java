@@ -1,36 +1,31 @@
 package com.example.proyecto3;
 
+import java.util.ArrayList;
+
 public class GraphShow {
-    public static void main(String[] args) {
-        GraphWeighted graphWeighted = new GraphWeighted(true, 7, 0.99);
 
-        NodeWeighted zero = new NodeWeighted(0, "0", 30, 50);
-        NodeWeighted one = new NodeWeighted(1, "1", 60, 50);
-        NodeWeighted two = new NodeWeighted(2, "2", 90, 80);
-        NodeWeighted three = new NodeWeighted(3, "3", 120, 50);
-        NodeWeighted four = new NodeWeighted(4, "4", 150, 50);
-        NodeWeighted five = new NodeWeighted(5, "5", 180, 50);
-        NodeWeighted six = new NodeWeighted(6, "6", 210, 50);
+    private static int generaXRandom(){
+        return (int)Math.floor(Math.random()*630);
+    }
 
+    private static int generaYRandom(){
+        return (int)Math.floor(Math.random()*600);
+    }
 
+    public static GraphWeighted creaGrafo(int cantidadNodos, double probabilidad) {
+        GraphWeighted graphWeighted = new GraphWeighted(true, cantidadNodos);
+        for (int i = 0; i < cantidadNodos; i++) {
+            NodeWeighted node = new NodeWeighted(i, String.valueOf(i), generaXRandom(), generaYRandom());
+            graphWeighted.addNode(node);
+        }
 
-        // Our addEdge method automatically adds Nodes as well.
-        // The addNode method is only there for unconnected Nodes,
-        // if we wish to add any
-        graphWeighted.addEdge(zero, one, 8);
-        graphWeighted.addEdge(zero, two, 11);
-        graphWeighted.addEdge(one, three, 3);
-        graphWeighted.addEdge(one, four, 8);
-        graphWeighted.addEdge(one, two, 7);
-        graphWeighted.addEdge(two, four, 9);
-        graphWeighted.addEdge(three, four, 5);
-        graphWeighted.addEdge(three, five, 2);
-        graphWeighted.addEdge(four, six, 6);
-        graphWeighted.addEdge(five, four, 1);
-        graphWeighted.addEdge(five, six, 8);
+        for(int i =0; i < cantidadNodos; i++){
+            for(int j=0; j< cantidadNodos; j++){
+                graphWeighted.addEdge(graphWeighted.nodes.get(i), graphWeighted.nodes.get(j), probabilidad, Math.random()*10);
+            }
+        }
 
-        graphWeighted.DijkstraShortestPath(zero, four);
-
+        return graphWeighted;
     }
 
 

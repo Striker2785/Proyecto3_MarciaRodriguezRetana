@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
@@ -27,19 +28,12 @@ public class HelloController implements Initializable{
     private AnchorPane mainPane;
     @FXML
     private AnchorPane gamePane;
+    @FXML
+    private TextField cantidadNodos;
 
     public void addButton(ActionEvent event) throws IOException {
-        GraphWeighted graphWeighted = new GraphWeighted(true, 3, 0.99);
-
-        NodeWeighted zero = new NodeWeighted(0, "0", 30, 50);
-        NodeWeighted one = new NodeWeighted(1, "1", 100, 300);
-        NodeWeighted two = new NodeWeighted(2, "2", 200, 80);
-
-        graphWeighted.addNode(zero);
-        graphWeighted.addNode(one);
-        graphWeighted.addNode(two);
-
-        graphWeighted.addEdge(zero, one, 8);
+        gamePane.getChildren().clear();
+        GraphWeighted graphWeighted = GraphShow.creaGrafo(Integer.parseInt(cantidadNodos.getText()), 0.5);
 
         for (int i = 0; i < graphWeighted.nNodos; i++) {
             NodeWeighted unNodo = graphWeighted.nodes.get(i);
