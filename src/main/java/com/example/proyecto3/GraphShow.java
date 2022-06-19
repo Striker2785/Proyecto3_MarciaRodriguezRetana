@@ -2,14 +2,17 @@ package com.example.proyecto3;
 
 public class GraphShow {
     public static void main(String[] args) {
-        GraphWeighted graphWeighted = new GraphWeighted(true);
-        NodeWeighted zero = new NodeWeighted(0, "0");
-        NodeWeighted one = new NodeWeighted(1, "1");
-        NodeWeighted two = new NodeWeighted(2, "2");
-        NodeWeighted three = new NodeWeighted(3, "3");
-        NodeWeighted four = new NodeWeighted(4, "4");
-        NodeWeighted five = new NodeWeighted(5, "5");
-        NodeWeighted six = new NodeWeighted(6, "6");
+        GraphWeighted graphWeighted = new GraphWeighted(true, 7, 0.99);
+
+        NodeWeighted zero = new NodeWeighted(0, "0", 30, 50);
+        NodeWeighted one = new NodeWeighted(1, "1", 60, 50);
+        NodeWeighted two = new NodeWeighted(2, "2", 90, 80);
+        NodeWeighted three = new NodeWeighted(3, "3", 120, 50);
+        NodeWeighted four = new NodeWeighted(4, "4", 150, 50);
+        NodeWeighted five = new NodeWeighted(5, "5", 180, 50);
+        NodeWeighted six = new NodeWeighted(6, "6", 210, 50);
+
+
 
         // Our addEdge method automatically adds Nodes as well.
         // The addNode method is only there for unconnected Nodes,
@@ -27,5 +30,8 @@ public class GraphShow {
         graphWeighted.addEdge(five, six, 8);
 
         graphWeighted.DijkstraShortestPath(zero, four);
+
     }
+
+
 }
