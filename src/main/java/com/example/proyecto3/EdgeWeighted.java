@@ -1,38 +1,25 @@
 package com.example.proyecto3;
 
-import java.util.*;
-
-public class EdgeWeighted implements Comparable<EdgeWeighted> {
+/**
+ * Clase de arista que contiene 2 propiedades de clase NodeWeighted: source y destination
+ * Y una propiedad de weight que es el peso de esa arista
+ * Tiene infomracion sobre la conexion entre nodos
+ */
+public class EdgeWeighted{
 
     NodeWeighted source;
     NodeWeighted destination;
     double weight;
 
     EdgeWeighted(NodeWeighted s, NodeWeighted d, double w) {
-        // Note that we are choosing to use the (exact) same objects in the Edge class
-        // and in the GraphShow and GraphWeighted classes on purpose - this MIGHT NOT
-        // be something you want to do in your own code, but for sake of readability
-        // we've decided to go with this option
         source = s;
         destination = d;
         weight = w;
     }
+    //Este metodo sirve para hacer tests
     public String toString() {
         return String.format("(%s -> %s, %f)", source.name, destination.name, weight);
     }
-    // We need this method if we want to use PriorityQueues instead of LinkedLists
-    // to store our edges, the benefits are discussed later, we'll be using LinkedLists
-    // to make things as simple as possible
-    public int compareTo(EdgeWeighted otherEdge) {
-
-        // We can't simply use return (int)(this.weight - otherEdge.weight) because
-        // this sometimes gives false results
-        if (this.weight > otherEdge.weight) {
-            return 1;
-        }
-        else return -1;
-    }
-
 
 }
 
