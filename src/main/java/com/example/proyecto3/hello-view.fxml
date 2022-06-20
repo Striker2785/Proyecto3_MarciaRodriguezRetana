@@ -25,6 +25,7 @@
             <TextField fx:id="cantidadNodos" layoutX="47.0" layoutY="135.0" prefHeight="26.0" prefWidth="54.0" />
             <Button layoutX="33.0" layoutY="222.0" mnemonicParsing="false" onAction="#addButton" text="Crear Juego" />
             <Button fx:id="botonEmpezar" disable="true" layoutX="41.0" layoutY="257.0" mnemonicParsing="false" onAction="#comienzaJuego" text="Empezar" />
+            <Label fx:id="textMensaje" layoutX="2.0" layoutY="300.0" prefHeight="17.0" prefWidth="153.0" />
          </children>
       </AnchorPane>
    </children>

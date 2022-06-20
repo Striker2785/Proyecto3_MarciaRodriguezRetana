@@ -33,13 +33,19 @@ public class HelloController implements Initializable{
     private TextField cantidadNodos;
     @FXML
     private Button botonEmpezar;
+    @FXML
+    private Label textMensaje;
 
+
+    public void poneComida(ActionEvent event){
+
+    }
 
 
     public void addButton(ActionEvent event) throws IOException {
         gamePane.getChildren().clear();
         int numeroNodos = Integer.parseInt(cantidadNodos.getText());
-        graphWeighted = GraphShow.creaGrafo(numeroNodos, 0.99);
+        graphWeighted = GraphShow.creaGrafo(numeroNodos, 0.3);
         for (NodeWeighted node: graphWeighted.nodes) {
             System.out.println(node.getX());
             Button newButton = new Button(node.name);
@@ -77,22 +83,28 @@ public class HelloController implements Initializable{
         int size = pathNodos.size();
         Path path = new Path();
 
-        //Moving to the starting point
         MoveTo moveTo = new MoveTo(start.getX()-90, start.getY()-110);
-        LineTo line1 = new LineTo(pathNodos.get(size-2).getX()-90, pathNodos.get(size-2).getY()-110);
-
-
-        //Adding all the elements to the path
         path.getElements().add(moveTo);
-        path.getElements().add(line1);
-        //path.getElements().addAll(line1, line2, line3, line4, line5);
+
+        if(size == 0){
+            textMensaje.setText("No hay conexion entre los nodos");
+        }else{
+            for(int i = 1; i <= size; i++) {
+                int coordX = pathNodos.get(size - i).getX() - 90;
+                int coordY = pathNodos.get(size - i).getY() - 110;
+                LineTo newLine = new LineTo(coordX, coordY);
+                path.getElements().add(newLine);
+            }
+        }
+
+
 
         //Creating the path transition
         PathTransition transition = new PathTransition();
         transition.setNode(greenAnt);
         transition.setDuration(Duration.seconds(6));
         transition.setPath(path);
-        transition.setCycleCount(PathTransition.INDEFINITE);
+        transition.setCycleCount(1);
         transition.play();
 
 
