@@ -11,9 +11,19 @@
    <children>
       <AnchorPane fx:id="gamePane" layoutX="160.0" prefHeight="600.0" prefWidth="640.0">
          <children>
-            <ImageView fx:id="greenAnt" fitHeight="17.0" fitWidth="48.0" layoutX="96.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="greenAnt" fitHeight="17.0" fitWidth="48.0" layoutX="237.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@GreenAnt.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="comida" fitHeight="35.0" fitWidth="28.0" layoutX="281.0" layoutY="555.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@food.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="blueAnt" fitHeight="17.0" fitWidth="37.0" layoutX="320.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@BlueAnt.png" />
                </image>
             </ImageView>
          </children></AnchorPane>
