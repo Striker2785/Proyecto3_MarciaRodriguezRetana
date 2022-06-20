@@ -3,107 +3,154 @@ package com.example.proyecto3;
 import java.io.File;
 
 public class listaDblEnlace {
-    private Node head;
-    private Node tail;
-    private int size;
+    protected Partida start;
+    protected Partida end ;
+    public int size;
 
-    //Constructor
-    public listaDblEnlace(){
-        this.head = null;
-        this.tail = null;
-        this.size = 0;
-    }
 
-    public Node getHead() {
-        return head;
-    }
-
-    public int getSize(){
-        return size;
+    public listaDblEnlace() {
+        start = null;
+        end = null;
+        size = 0;
     }
 
     public boolean isEmpty() {
-        return this.head == null;
+        return start == null;
     }
 
 
-    public void addNode(Object data) {
-        Node newNode = new Node(data);
-        if (head == null) {
-            head = tail = newNode;
-            head.setPrevious(null);
-            tail.setNext(null);
-        } else {
-            tail.setNext(newNode);
-            newNode.setPrevious(tail);
-            tail = newNode;
-            tail.setNext(null);
+    public int getSize() {
+        return size;
+    }
+
+    public void insertAtStart(int val) {
+        Partida nptr = new Partida(val, null, null);
+        if (start == null) {
+            nptr.setLinkNext(nptr);
+            nptr.setLinkPrev(nptr);
+            start = nptr;
+            end = start;
         }
-        this.size++;
-    }
-
-    public void insertFirst(Object data){
-        Node newNode = new Node(data);
-        if(this.head != null){
-            newNode.setNext(this.head);
-            this.head = newNode;
-            this.size++;
-        }else{
-            this.head = newNode;
+        else {
+            nptr.setLinkPrev(end);
+            end.setLinkNext(nptr);
+            start.setLinkPrev(nptr);
+            nptr.setLinkNext(start);
+            start = nptr;
         }
-
+        size++ ;
     }
 
-    public Node deleteFirst(){
-        if(this.head != null){
-            Node temp = this.head;
-            this.head = this.head.getNext();
-            this.head.setPrevious(null);
-            this.size --;
-            return temp;
-        }else{
-            return null;
+    public void insertAtEnd(int val){
+        Partida nptr = new Partida(val, null, null);
+        if (start == null)
+        {
+            nptr.setLinkNext(nptr);
+            nptr.setLinkPrev(nptr);
+            start = nptr;
+            end = start;
         }
-    }
-    //metodo de prueba para verificar otros metodos
-    public void displayList() {
-        Node current = this.head;
-        while (current != null) {
-            System.out.println(current.getData());
-            current = current.getNext();
+        else
+        {
+            nptr.setLinkPrev(end);
+            end.setLinkNext(nptr);
+            start.setLinkPrev(nptr);
+            nptr.setLinkNext(start);
+            end = nptr;
         }
+        size++;
     }
 
-    public void duplicar(){
-        int size = this.size;
-        Node current = this.getHead();
-        for(int i =0; i<size;i++){
-            this.addNode(current.getData());
-            current = current.getNext();
-
+    public void insertAtPos(int val , int pos)
+    {
+        Partida nptr = new Partida(val, null, null);
+        if (pos == 1)
+        {
+            insertAtStart(val);
+            return;
         }
-    }
-
-    public Node find(Object searchValue) {
-        Node current = this.head;
-        while (current != null) {
-            if (current.getData().equals(searchValue)) {
-                return current;
-            } else {
-                current = current.getNext();
+        Partida ptr = start;
+        for (int i = 2; i <= size; i++)
+        {
+            if (i == pos)
+            {
+                Partida tmp = ptr.getLinkNext();
+                ptr.setLinkNext(nptr);
+                nptr.setLinkPrev(ptr);
+                nptr.setLinkNext(tmp);
+                tmp.setLinkPrev(nptr);
             }
+            ptr = ptr.getLinkNext();
         }
-        return null;
+        size++ ;
     }
 
-    public listaDblEnlace addFiles(File[] files){
-        for(File file : files){
-            this.addNode(file);
+    public void deleteAtPos(int pos)
+    {
+        if (pos == 1)
+        {
+            if (size == 1)
+            {
+                start = null;
+                end = null;
+                size = 0;
+                return;
+            }
+            start = start.getLinkNext();
+            start.setLinkPrev(end);
+            end.setLinkNext(start);
+            size--;
+            return ;
         }
-        return this;
+        if (pos == size)
+        {
+            end = end.getLinkPrev();
+            end.setLinkNext(start);
+            start.setLinkPrev(end);
+            size-- ;
+        }
+        Partida ptr = start.getLinkNext();
+        for (int i = 2; i <= size; i++)
+        {
+            if (i == pos)
+            {
+                Partida p = ptr.getLinkPrev();
+                Partida n = ptr.getLinkNext();
+
+                p.setLinkNext(n);
+                n.setLinkPrev(p);
+                size-- ;
+                return;
+            }
+            ptr = ptr.getLinkNext();
+        }
     }
 
-
-
-
+    public void display()
+    {
+        System.out.print("\nCircular Doubly Linked List = ");
+        Partida ptr = start;
+        if (size == 0)
+        {
+            System.out.print("empty\n");
+            return;
+        }
+        if (start.getLinkNext() == start)
+        {
+            System.out.print(start.getData()+ " <-> "+ptr.getData()+ "\n");
+            return;
+        }
+        System.out.print(start.getData()+ " <-> ");
+        ptr = start.getLinkNext();
+        while (ptr.getLinkNext() != start)
+        {
+            System.out.print(ptr.getData()+ " <-> ");
+            ptr = ptr.getLinkNext();
+        }
+        System.out.print(ptr.getData()+ " <-> ");
+        ptr = ptr.getLinkNext();
+        System.out.print(ptr.getData()+ "\n");
+    }
 }
+
+
