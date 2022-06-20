@@ -51,7 +51,7 @@ public class HelloController implements Initializable{
     public void addButton(ActionEvent event) throws IOException {
         gamePane.getChildren().clear(); // Es importante borrar los nodos de la partida anterior
         int numeroNodos = Integer.parseInt(cantidadNodos.getText());
-        graphWeighted = GraphShow.creaGrafo(numeroNodos, 0.9);
+        graphWeighted = GraphShow.creaGrafo(numeroNodos, 0.6);
         for (NodeWeighted node: graphWeighted.nodes) {
             Button newButton = new Button(node.name);
             newButton.setLayoutX(node.getX());

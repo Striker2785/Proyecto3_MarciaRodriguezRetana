@@ -1,9 +1,9 @@
 package com.example.proyecto3;
 
 public class Partida {
-    private int cantidadNodos;
-    private int puntajeAzules;
-    private int puntajeVerdes;
+    public String cantidadNodos;
+    public String puntajeAzules;
+    public String puntajeVerdes;
     protected int data;
     protected Partida next, prev;
 
@@ -22,7 +22,7 @@ public class Partida {
         prev = p;
     }
 
-    public void setPartida(int nodos, int puntajeA, int puntajeV){
+    public void setPartida(String nodos, String puntajeA, String puntajeV){
         this.cantidadNodos = nodos;
         this.puntajeAzules = puntajeA;
         this.puntajeVerdes = puntajeV;
