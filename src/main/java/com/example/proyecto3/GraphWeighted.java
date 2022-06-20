@@ -3,14 +3,14 @@ package com.example.proyecto3;
 import java.util.*;
 
 public class GraphWeighted {
-    public ArrayList<NodeWeighted> nodes;
+    public Set<NodeWeighted> nodes;
     private boolean directed;
     public int nNodos;
 
     GraphWeighted(boolean directed, int n) {
         this.nNodos = n;
         this.directed = directed;
-        nodes = new ArrayList<>(n);
+        nodes = new HashSet<>(n);
     }
 
     public void addNode(NodeWeighted... n) {
@@ -20,7 +20,8 @@ public class GraphWeighted {
     }
 
     public NodeWeighted obtenerNodo(int id){
-        return nodes.get(id);
+        NodeWeighted[] listaNodos = nodes.toArray(new NodeWeighted[nodes.size()]);
+        return listaNodos[id];
     }
 
 
@@ -93,7 +94,8 @@ public class GraphWeighted {
         }
     }
 
-    public void DijkstraShortestPath(NodeWeighted start, NodeWeighted end) {
+    public ArrayList<NodeWeighted> DijkstraShortestPath(NodeWeighted start, NodeWeighted end) {
+        ArrayList<NodeWeighted> path = new ArrayList<>(nNodos);
         // We keep track of which path gives us the shortest path for each node
         // by keeping track how we arrived at a particular node, we effectively
         // keep a "pointer" to the parent node of each node, and we follow that
@@ -130,20 +132,24 @@ public class GraphWeighted {
             // (they aren't connected)
             if (currentNode == null) {
                 System.out.println("There isn't a path between " + start.name + " and " + end.name);
-                return;
+                return path;
             }
 
             // If the closest non-visited node is our destination, we want to print the path
             if (currentNode == end) {
+
                 System.out.println("The path with the smallest weight between "
                         + start.name + " and " + end.name + " is:");
+
+
 
                 NodeWeighted child = end;
 
                 // It makes no sense to use StringBuilder, since
                 // repeatedly adding to the beginning of the string
                 // defeats the purpose of using StringBuilder
-                String path = end.name;
+                String pathString = child.name;
+                path.add(end);
                 while (true) {
                     NodeWeighted parent = changedAt.get(child);
                     if (parent == null) {
@@ -153,12 +159,13 @@ public class GraphWeighted {
                     // Since our changedAt map keeps track of child -> parent relations
                     // in order to print the path we need to add the parent before the child and
                     // it's descendants
-                    path = parent.name + " " + path;
+                    pathString = parent.name + " " + pathString;
+                    path.add(parent);
                     child = parent;
                 }
-                System.out.println(path);
+                System.out.println(pathString);
                 System.out.println("The path costs: " + shortestPathMap.get(end));
-                return;
+                return path;
             }
             currentNode.visit();
 
