@@ -2,15 +2,18 @@ package com.example.proyecto3;
 
 import java.util.LinkedList;
 
+/**
+ * Esta clase de nodos sigue el mismo estandar de nombre para diferenciarlo a la clase de nodos para estructuras de listas enlazadas
+ * Cada nodo tiene una lista de las aristas, o sea de los nodos a los que este se conecta
+ * Una propiedad muy util es la de las coordenadas X y Y para poder generar el camino en la interfaz
+ */
 public class NodeWeighted {
-    // The int n and String name are just arbitrary attributes
-    // we've chosen for our nodes these attributes can of course
-    // be whatever you need
     String name;
     int x;
     int y;
     int n;
     private boolean visited;
+    private boolean comida;
     LinkedList<EdgeWeighted> edges;
 
     NodeWeighted(int n, String name, int x, int y) {
@@ -24,6 +27,13 @@ public class NodeWeighted {
 
     int getX(){
         return x;
+    }
+    // Indica si este nodo tiene comida
+    void setComida(boolean bool){
+        this.comida = bool;
+    }
+    boolean tieneComida(){
+        return this.comida;
     }
 
     int getY(){
