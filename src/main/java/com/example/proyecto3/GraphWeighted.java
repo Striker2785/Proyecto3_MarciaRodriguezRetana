@@ -110,17 +110,14 @@ public class GraphWeighted {
      * @param weight
      */
     private void addEdgeHelper(NodeWeighted a, NodeWeighted b, double weight) {
-        // Go through all the edges and see whether that edge has
-        // already been added
         for (EdgeWeighted edge : a.edges) {
             if (edge.source == a && edge.destination == b) {
-                // Update the value in case it's a different one now
+                // Actualiza el peso en caso de ser diferente
                 edge.weight = weight;
                 return;
             }
         }
-        // If it hasn't been added already (we haven't returned
-        // from the for loop), add the edge
+        // Se agrega la a rista al nodo a
         a.edges.add(new EdgeWeighted(a, b, weight));
     }
 

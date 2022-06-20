@@ -115,41 +115,39 @@ public class HelloController implements Initializable{
         NodeWeighted start = graphWeighted.obtenerNodo(0); //inicia con el primer nodo de la lista
         NodeWeighted end = graphWeighted.nodoConComida(); // el nodo objetivo es el que tiene comida
 
-        while(true){
-            //se obtiene la lista del camino a seguir segun el algoritmo de Dijkstra
-            ArrayList<NodeWeighted> pathNodos = graphWeighted.DijkstraShortestPath(start, end);
-            int size = pathNodos.size();
-            Path path = new Path();
+        //se obtiene la lista del camino a seguir segun el algoritmo de Dijkstra
+        ArrayList<NodeWeighted> pathNodos = graphWeighted.DijkstraShortestPath(start, end);
+        int size = pathNodos.size();
+        Path path = new Path();
 
-            // Coordenadas iniciales de la hormiga
-            MoveTo moveTo = new MoveTo(start.getX()-210, start.getY()-550);
-            path.getElements().add(moveTo);
+        // Coordenadas iniciales de la hormiga
+        MoveTo moveTo = new MoveTo(start.getX()-210, start.getY()-550);
+        path.getElements().add(moveTo);
 
-            // Si el arreglo no tiene nodos, significa que no hay conexion entre los nodos
-            if(size == 0){
-                textMensaje.setText("No hay conexion entre los nodos");
-            }else{
-                for(int i = 1; i <= size; i++) {
-                    int coordX = pathNodos.get(size - i).getX() - 210; //offset de coordenadas
-                    int coordY = pathNodos.get(size - i).getY() - 550;
-                    LineTo newLine = new LineTo(coordX, coordY);
-                    path.getElements().add(newLine);
-                }
+        // Si el arreglo no tiene nodos, significa que no hay conexion entre los nodos
+        if(size == 0){
+            textMensaje.setText("No hay conexion entre los nodos");
+        }else{
+            for(int i = 1; i <= size; i++) {
+                int coordX = pathNodos.get(size - i).getX() - 210; //offset de coordenadas
+                int coordY = pathNodos.get(size - i).getY() - 550;
+                LineTo newLine = new LineTo(coordX, coordY);
+                path.getElements().add(newLine);
             }
-            // Camino en coordenadas en las que el nodo de la hormiga se mueve
-            PathTransition transition = new PathTransition();
-            transition.setNode(greenAnt);
-            transition.setDuration(Duration.seconds(6));
-            transition.setPath(path);
-            transition.setCycleCount(1);
-            transition.play();
-
-
-            end.setComida(false);
-            end = graphWeighted.nodoConComida();
-            gamePane.getChildren().remove(comida);
-
         }
+        // Camino en coordenadas en las que el nodo de la hormiga se mueve
+        PathTransition transition = new PathTransition();
+        transition.setNode(greenAnt);
+        transition.setDuration(Duration.seconds(6));
+        transition.setPath(path);
+        transition.setCycleCount(1);
+        transition.play();
+
+
+        end.setComida(false);
+        end = graphWeighted.nodoConComida();
+        gamePane.getChildren().remove(comida);
+
 
 
 
