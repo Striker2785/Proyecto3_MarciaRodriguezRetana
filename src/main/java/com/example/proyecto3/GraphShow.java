@@ -1,6 +1,7 @@
 package com.example.proyecto3;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GraphShow {
 
@@ -18,15 +19,17 @@ public class GraphShow {
             NodeWeighted node = new NodeWeighted(i, String.valueOf(i), generaXRandom(), generaYRandom());
             graphWeighted.addNode(node);
         }
+        Set<NodeWeighted> set = graphWeighted.nodes;
+        NodeWeighted[] listaNodos = set.toArray(new NodeWeighted[set.size()]);
 
         for(int i =0; i < cantidadNodos; i++){
             for(int j=0; j< cantidadNodos; j++){
-                graphWeighted.addEdge(graphWeighted.nodes.get(i), graphWeighted.nodes.get(j), probabilidad, Math.random()*10);
+                if(j!=i){
+                    graphWeighted.addEdge(listaNodos[i], listaNodos[j], probabilidad, Math.random()*10);
+                }
             }
         }
-        //graphWeighted.DijkstraShortestPath(graphWeighted.nodes.get(0), graphWeighted.nodes.get(cantidadNodos-1));
         return graphWeighted;
     }
-
 
 }
