@@ -4,6 +4,7 @@ import javafx.animation.PathTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,9 +16,11 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable{
+    public GraphWeighted graphWeighted;
     @FXML
     private ImageView greenAnt;
     @FXML
@@ -32,16 +35,16 @@ public class HelloController implements Initializable{
     private Button botonEmpezar;
 
 
+
     public void addButton(ActionEvent event) throws IOException {
         gamePane.getChildren().clear();
-        GraphWeighted graphWeighted = GraphShow.creaGrafo(Integer.parseInt(cantidadNodos.getText()), 0.1);
-
-        for (int i = 0; i < graphWeighted.nNodos; i++) {
-            NodeWeighted unNodo = graphWeighted.nodes.get(i);
-
-            Button newButton = new Button(unNodo.name);
-            newButton.setLayoutX(unNodo.getX());
-            newButton.setLayoutY(unNodo.getY());
+        int numeroNodos = Integer.parseInt(cantidadNodos.getText());
+        graphWeighted = GraphShow.creaGrafo(numeroNodos, 0.99);
+        for (NodeWeighted node: graphWeighted.nodes) {
+            System.out.println(node.getX());
+            Button newButton = new Button(node.name);
+            newButton.setLayoutX(node.getX());
+            newButton.setLayoutY(node.getY());
             newButton.setTextFill(Color.WHITE);
             newButton.setStyle(
                     "-fx-background-radius: 5em; " +
@@ -53,36 +56,36 @@ public class HelloController implements Initializable{
                             "-fx-background-insets: 0px; " +
                             "-fx-padding: 0px;"
             );
-            for(EdgeWeighted edge: unNodo.edges){
-                Line newLine = new Line(unNodo.getX()+10, unNodo.getY()+10, edge.destination.getX()+10, edge.destination.getY()+10);
+            for(EdgeWeighted edge: node.edges){
+                Line newLine = new Line(node.getX()+10, node.getY()+10, edge.destination.getX()+10, edge.destination.getY()+10);
                 gamePane.getChildren().add(newLine);
 
             }
 
             gamePane.getChildren().add(newButton);
         }
-        gamePane.getChildren().add(greenAnt);
-        greenAnt.setLayoutX(graphWeighted.nodes.get(0).getX());
-        greenAnt.setLayoutY(graphWeighted.nodes.get(0).getY());
+
         botonEmpezar.setDisable(false);
     }
 
     public void comienzaJuego(ActionEvent event)throws IOException{
-        Circle circle = new Circle(100);
+        gamePane.getChildren().add(greenAnt);
+        int numeroNodos = Integer.parseInt(cantidadNodos.getText());
+        NodeWeighted start = graphWeighted.obtenerNodo(0);
+        NodeWeighted end = graphWeighted.obtenerNodo(numeroNodos-1);
+        ArrayList<NodeWeighted> pathNodos = graphWeighted.DijkstraShortestPath(start, end);
+        int size = pathNodos.size();
         Path path = new Path();
 
         //Moving to the starting point
-        MoveTo moveTo = new MoveTo(108, 71);
+        MoveTo moveTo = new MoveTo(start.getX()-90, start.getY()-110);
+        LineTo line1 = new LineTo(pathNodos.get(size-2).getX()-90, pathNodos.get(size-2).getY()-110);
 
-        LineTo line1 = new LineTo(321, 161);
-        LineTo line2 = new LineTo(126,232);
-        LineTo line3 = new LineTo(232,52);
-        LineTo line4 = new LineTo(269, 250);
-        LineTo line5 = new LineTo(108, 71);
 
         //Adding all the elements to the path
         path.getElements().add(moveTo);
-        path.getElements().addAll(line1, line2, line3, line4, line5);
+        path.getElements().add(line1);
+        //path.getElements().addAll(line1, line2, line3, line4, line5);
 
         //Creating the path transition
         PathTransition transition = new PathTransition();
@@ -91,6 +94,8 @@ public class HelloController implements Initializable{
         transition.setPath(path);
         transition.setCycleCount(PathTransition.INDEFINITE);
         transition.play();
+
+
     }
 
     @Override
